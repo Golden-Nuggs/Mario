@@ -21,7 +21,7 @@ void Block::start(BlockType type, unsigned int x, unsigned int y, unsigned int w
 
 	bodyDef.position.Set(x, y);
 	bodyPtr = worldPtr->CreateBody(&bodyDef);
-	bodyPtr->SetUserData((void*)this); // <--- I guess this is wrong. Also compiles if I dont cast it. Tried both already
+	bodyPtr->SetUserData(this); // <--- I guess this is wrong. Also compiles if I dont cast it. Tried both already
 
 	box.SetAsBox(hx, hy);
 

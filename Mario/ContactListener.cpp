@@ -18,7 +18,6 @@ void ContactListener::BeginContact(b2Contact* contact)
 	{
 		std::string a = fdA->friendlyName;
 		std::string b = fdB->friendlyName;
-		std::cout << a << " collided with " << b << std::endl;
 		if (a == Constants::MARIO_TOP_SENSOR_FIXTUREDATA_NAME && b == Constants::BLOCK_FIXTUREDATA_NAME)
 		{
 			HandleBlockContact(static_cast<Block*>(udB));
