@@ -25,7 +25,7 @@ void Guy::start(b2World* world)
 	sprite.setOrigin(hx, hy);
 
 	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(5 * Constants::PPU, 13 * Constants::PPU);
+	bodyDef.position.Set(5 * Constants::PPU, 14 * Constants::PPU);
 	bodyPtr = worldPtr->CreateBody(&bodyDef);
 	bodyPtr->SetUserData(this);
 

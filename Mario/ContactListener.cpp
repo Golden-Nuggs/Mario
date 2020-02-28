@@ -12,8 +12,6 @@ void ContactListener::BeginContact(b2Contact* contact)
 	void* udA = contact->GetFixtureA()->GetBody()->GetUserData();
 	void* udB = contact->GetFixtureB()->GetBody()->GetUserData();
 
-
-
 	if (fdA != nullptr && fdB != nullptr && udA != nullptr && udB != nullptr)
 	{
 		std::string a = fdA->friendlyName;
@@ -38,8 +36,6 @@ void ContactListener::HandleBlockContact(Block* block)
 	}
 
 }
-
-
 
 
 void ContactListener::EndContact(b2Contact* contact)

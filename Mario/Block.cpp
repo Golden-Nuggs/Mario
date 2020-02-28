@@ -24,11 +24,8 @@ void Block::start(BlockType type, unsigned int x, unsigned int y, unsigned int w
 	bodyPtr->SetUserData((void*)this); // <--- I guess this is wrong. Also compiles if I dont cast it. Tried both already
 
 	box.SetAsBox(hx, hy);
-
-
 	mainFixture.shape = &box;
-
-
+	
 	blockType = type;
 	fixtureData_main = new FixtureUserData;	fixtureData_main = new FixtureUserData;
 	fixtureData_main->friendlyName = Constants::BLOCK_FIXTUREDATA_NAME;
@@ -49,5 +46,6 @@ void Block::draw(sf::RenderWindow& window)
 
 void Block::hit()
 {
+	std::cout << "Blocktype: " << (int)blockType << std::endl; // <<--- WHY DOES THIS NOT RETURN THE CORRECT INT (IT VARIES FROM 1 ~ 9999999)
 	sprite.setColor(sf::Color::Blue); // <--- IT DOESN'T CHANGE COLOR WHEN FUNCTION IS CALLED.
 }
