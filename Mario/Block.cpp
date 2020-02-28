@@ -22,7 +22,10 @@ void Block::start(BlockType type, unsigned int x, unsigned int y, unsigned int w
 	bodyDef.position.Set(x, y);
 	bodyPtr = worldPtr->CreateBody(&bodyDef);
 	bodyPtr->SetUserData((void*)this); // <--- I guess this is wrong. Also compiles if I dont cast it. Tried both already
-
+	std::cout << "(Block.cpp) bodyPtr set to: " << bodyPtr << std::endl;
+	std::cout << "(Block.cpp) bodyPtr (deref): " << &bodyPtr << std::endl;
+	bodyPtr->SetUserData(this);
+	std::cout << "'this' (Block.cpp) set as BodyPtr->SetUd. Result of body->getUd = " << bodyPtr->GetUserData() << std::endl;
 	box.SetAsBox(hx, hy);
 	mainFixture.shape = &box;
 	
@@ -46,6 +49,17 @@ void Block::draw(sf::RenderWindow& window)
 
 void Block::hit()
 {
+	if (bodyPtr != nullptr)
+	{
+		std::cout << "(Block.cpp) bblock::Hit(): bodyptr now equals:  " << bodyPtr << std::endl;
+	}
+	else {
+		std::cout << "(Block.cpp) bblock::Hit(): attempted to print bodyPtr  failed (nullptr)  " << std::endl;
+	}
+
+
+	std::cout << "(Block.cpp) bblock::Hit(): this now equals:  " << this << std::endl;
+
 	std::cout << "Blocktype: " << (int)blockType << std::endl; // <<--- WHY DOES THIS NOT RETURN THE CORRECT INT (IT VARIES FROM 1 ~ 9999999)
 	sprite.setColor(sf::Color::Blue); // <--- IT DOESN'T CHANGE COLOR WHEN FUNCTION IS CALLED.
 }

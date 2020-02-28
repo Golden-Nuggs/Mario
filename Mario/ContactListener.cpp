@@ -8,9 +8,13 @@ void ContactListener::BeginContact(b2Contact* contact)
 {
 	FixtureUserData* fdA = (FixtureUserData*)contact->GetFixtureA()->GetUserData();
 	FixtureUserData* fdB = (FixtureUserData*)contact->GetFixtureB()->GetUserData();
+	std::cout << "fdA = " << fdA << std::endl;
+	std::cout << "fdB = " << fdB << std::endl;
 
 	void* udA = contact->GetFixtureA()->GetBody()->GetUserData();
 	void* udB = contact->GetFixtureB()->GetBody()->GetUserData();
+	std::cout << "udA = " << udA << std::endl;
+	std::cout << "udB = " << udB << std::endl;
 
 	if (fdA != nullptr && fdB != nullptr && udA != nullptr && udB != nullptr)
 	{
@@ -32,6 +36,7 @@ void ContactListener::HandleBlockContact(Block* block)
 {
 	if (block != nullptr)
 	{
+		std::cout << "Block* (passed in to HandleBlockContact(Block*) is: " << block << std::endl;
 		block->hit();
 	}
 

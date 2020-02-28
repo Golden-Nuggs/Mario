@@ -1,9 +1,10 @@
 #include "Guy.h"
 #include "Constants.h"
-#include <iostream>
 #include "RaycastCallBack.h"
 #include <cmath>
-
+#include <Windows.h>
+#include <iostream>
+#include <sstream>
 
 Guy::Guy()
 {
@@ -27,7 +28,10 @@ void Guy::start(b2World* world)
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(5 * Constants::PPU, 14 * Constants::PPU);
 	bodyPtr = worldPtr->CreateBody(&bodyDef);
+	std::cout << "(Guy.cpp) bodyPtr set to: " << bodyPtr << std::endl;
+	std::cout << "(Guy.cpp) bodyPtr (deref): " << &bodyPtr << std::endl;
 	bodyPtr->SetUserData(this);
+	std::cout << "'this' (guy.cpp) set as BodyPtr->SetUd. Result of body->getUd = " << bodyPtr->GetUserData() << std::endl;
 
 	colliderBox.SetAsBox(hx / 2.f, hy / 1.15f); 
 	mainFixture.shape = &colliderBox;
@@ -37,6 +41,7 @@ void Guy::start(b2World* world)
 	fixtureData_main->friendlyName = Constants::MARIO_MAIN_FIXTURE_FIXTUREDATA_NAME;
 	mainFixture.userData = fixtureData_main;
 	bodyPtr->CreateFixture(&mainFixture);
+
 
 	topSensorBox.SetAsBox(sprite.getTextureRect().width / 4.f, 10.f, b2Vec2(sprite.getPosition().x, sprite.getPosition().y - hy), 0.f);
 	topSensor.shape = &topSensorBox;
