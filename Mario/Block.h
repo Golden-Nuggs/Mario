@@ -10,8 +10,8 @@ class Block
 public:
 	enum class BlockType { UNINITIALIZED, BRICK, BRICK_UNBREAKABLE, QUESTION_MARK };
 	Block();
-	Block(const Block&) = delete;
-	Block& operator= (const Block&) = delete;
+	//Block(const Block&) = delete;
+	//Block& operator= (const Block&) = delete;
 	void start(BlockType type, unsigned int x, unsigned int y, unsigned int width, unsigned int height, sf::Texture& texture, unsigned int image_x, unsigned int image_y, b2World* world);
 	void update();
 	void draw(sf::RenderWindow& window);
@@ -19,7 +19,8 @@ public:
 
 
 private:
-	sf::Sprite* sprite = nullptr;
+	//sf::Sprite* sprite = nullptr;
+	sf::Sprite sprite;
 	BlockType blockType;
 	b2World* worldPtr = nullptr;
 	b2BodyDef bodyDef;

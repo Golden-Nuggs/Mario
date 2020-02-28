@@ -12,16 +12,16 @@ void Block::start(BlockType type, unsigned int x, unsigned int y, unsigned int w
 	float hx = width / 2.f;
 	float hy = height / 2.f;
 	worldPtr = world;
-	sprite = new sf::Sprite;
-	sprite->setTexture(texture);
-	sprite->setTextureRect(sf::IntRect(image_x, image_y, width, height));
-	sprite->setOrigin(hx, hy);
-	sprite->setPosition(x, y);
-	startPosition = sprite->getPosition();
+	//sprite = new sf::Sprite;
+	sprite.setTexture(texture);
+	sprite.setTextureRect(sf::IntRect(image_x, image_y, width, height));
+	sprite.setOrigin(hx, hy);
+	sprite.setPosition(x, y);
+	startPosition = sprite.getPosition();
 
 	bodyDef.position.Set(x, y);
 	bodyPtr = worldPtr->CreateBody(&bodyDef);
-	bodyPtr->SetUserData(this); // <--- I guess this is wrong. Also compiles if I dont cast it. Tried both already
+	bodyPtr->SetUserData((void*)this); // <--- I guess this is wrong. Also compiles if I dont cast it. Tried both already
 
 	box.SetAsBox(hx, hy);
 
@@ -39,20 +39,15 @@ void Block::start(BlockType type, unsigned int x, unsigned int y, unsigned int w
 
 void Block::update()
 {
-	sprite->setPosition(bodyPtr->GetPosition().x, bodyPtr->GetPosition().y);
+	sprite.setPosition(bodyPtr->GetPosition().x, bodyPtr->GetPosition().y);
 }
 
 void Block::draw(sf::RenderWindow& window)
 {
-	window.draw(*sprite);
+	window.draw(sprite);
 }
 
 void Block::hit()
 {
-	if (sprite == nullptr)
-	{
-		std::cout << "Error sprite is null on " << this << std::endl;
-		return;
-	}
-	sprite->setColor(sf::Color::Blue); // <--- IT DOESN'T CHANGE COLOR WHEN FUNCTION IS CALLED.
+	sprite.setColor(sf::Color::Blue); // <--- IT DOESN'T CHANGE COLOR WHEN FUNCTION IS CALLED.
 }
