@@ -34,16 +34,16 @@ void LevelManager::start(b2World* world)
 			sourceTiles = tileset.getTiles();
 			for (int i = 0; i < sourceTiles.size(); i++)
 			{
-				//std::cout << "TILESET: i:" << i << " || sourceTile ID:" << sourceTiles[i].ID << std::endl;
-				//std::cout << "TILESET: Image position: " << sourceTiles[i].imagePosition.x << " , " << sourceTiles[i].imagePosition.y << std::endl;
+				//std::cout << "TILESET: i:" << i << " || sourceTile ID:" << sourceTiles[i].ID << "\n";
+				//std::cout << "TILESET: Image position: " << sourceTiles[i].imagePosition.x << " , " << sourceTiles[i].imagePosition.y << "\n";
 			}
 			if (level_spriteSheet.loadFromFile(tileset.getImagePath()))
 			{
-				std::cout << "Level sprite sheet path: " << tileset.getImagePath() << std::endl;
+				std::cout << "Level sprite sheet path: " << tileset.getImagePath() << "\n";
 			}
 			else
 			{
-				std::cout << "Texture Not Loaded!" << std::endl;
+				std::cout << "Texture Not Loaded!" << "\n";
 			}
 		}
 
@@ -68,10 +68,11 @@ void LevelManager::start(b2World* world)
 					const auto& objects = objectLayer.getObjects();
 					for (const auto object : objects)
 					{
-						std::unique_ptr<Block> block{ new Block() };
+						//std::unique_ptr<Block> block{ new Block() };
+						Block block;
 						tmx::FloatRect aabb = object.getAABB();
-						block->start(Block::BlockType::QUESTION_MARK, aabb.left, aabb.top, tile_width, tile_height, level_spriteSheet, sourceTiles[Constants::BLOCK_Q_ID].imagePosition.x, sourceTiles[Constants::BLOCK_Q_ID].imagePosition.y, worldPtr);
-						all_block_ptrs.push_back(block);
+						block.start(Block::BlockType::QUESTION_MARK, aabb.left, aabb.top, tile_width, tile_height, level_spriteSheet, sourceTiles[Constants::BLOCK_Q_ID].imagePosition.x, sourceTiles[Constants::BLOCK_Q_ID].imagePosition.y, worldPtr);
+						all_block_ptrs.push_back(std::make_unique<Block>(block));
 					}
 				}
 				if (objectLayer.getName() == "blocks_brick")
@@ -79,10 +80,10 @@ void LevelManager::start(b2World* world)
 					const auto& objects = objectLayer.getObjects();
 					for (const auto object : objects)
 					{
-						std::unique_ptr<Block> block{ new Block() };
+						Block block;
 						tmx::FloatRect aabb = object.getAABB();
-						block->start(Block::BlockType::BRICK, aabb.left, aabb.top, tile_width, tile_height, level_spriteSheet, sourceTiles[Constants::BLOCK_BRICK_ID].imagePosition.x, sourceTiles[Constants::BLOCK_BRICK_ID].imagePosition.y, worldPtr);
-						all_block_ptrs.push_back(block);
+						block.start(Block::BlockType::BRICK, aabb.left, aabb.top, tile_width, tile_height, level_spriteSheet, sourceTiles[Constants::BLOCK_BRICK_ID].imagePosition.x, sourceTiles[Constants::BLOCK_BRICK_ID].imagePosition.y, worldPtr);
+						all_block_ptrs.push_back(std::make_unique<Block>(block));
 					}
 				}
 			}
@@ -110,13 +111,16 @@ void LevelManager::start(b2World* world)
 	}
 	else
 	{
-		std::cout << "Failed to load map" << std::endl;
+		std::cout << "Failed to load map" << "\n";
 	}
+
 	camera.initView(level_width * tile_width, level_height * tile_height);
-
-
-
 	guy.start(worldPtr);
+
+	for (int i = 0; i < all_block_ptrs.size(); i++)
+	{
+		std::cout << "block_ptrs vec " << i << ": " << all_block_ptrs[i]->bodyPtr->GetUserData() << "\n";
+	}
 }
 
 void LevelManager::update(float deltaSeconds)

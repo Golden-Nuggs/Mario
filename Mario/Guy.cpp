@@ -26,12 +26,9 @@ void Guy::start(b2World* world)
 	sprite.setOrigin(hx, hy);
 
 	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(5 * Constants::PPU, 14 * Constants::PPU);
+	bodyDef.position.Set(5 * Constants::PPU, 13.5f * (float)Constants::PPU);
 	bodyPtr = worldPtr->CreateBody(&bodyDef);
-	std::cout << "(Guy.cpp) bodyPtr set to: " << bodyPtr << std::endl;
-	std::cout << "(Guy.cpp) bodyPtr (deref): " << &bodyPtr << std::endl;
 	bodyPtr->SetUserData(this);
-	std::cout << "'this' (guy.cpp) set as BodyPtr->SetUd. Result of body->getUd = " << bodyPtr->GetUserData() << std::endl;
 
 	colliderBox.SetAsBox(hx / 2.f, hy / 1.15f); 
 	mainFixture.shape = &colliderBox;

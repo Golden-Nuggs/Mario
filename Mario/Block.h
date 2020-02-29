@@ -19,9 +19,9 @@ public:
 	void hit();
 
 
-private:
-	sf::Sprite* sprite = nullptr;
-	//sf::Sprite sprite;
+//private:
+	//sf::Sprite* sprite = nullptr;
+	sf::Sprite sprite;
 	BlockType blockType;
 	b2World* worldPtr = nullptr;
 	b2BodyDef bodyDef;
