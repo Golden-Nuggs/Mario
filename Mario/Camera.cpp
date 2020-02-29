@@ -5,7 +5,6 @@
 
 void Camera::initView(unsigned int levelWidth, unsigned int levelHeight)
 {
-
 	gameView.setSize(Constants::VIEW_WIDTH, Constants::VIEW_HEIGHT);
 	float gameViewExtentsX = gameView.getSize().x / 2.f;
 	float gameViewExtentsY = gameView.getSize().y / 2.f;

@@ -12,5 +12,6 @@ const float Constants::BASE_ANIM_FRAME_DELAY = 1 / 10.f;
 const std::string Constants::MARIO_TOP_SENSOR_FIXTUREDATA_NAME = "mario_top_sensor";
 const std::string Constants::MARIO_MAIN_FIXTURE_FIXTUREDATA_NAME = "mario_main_fixture";
 const std::string Constants::BLOCK_FIXTUREDATA_NAME = "block";
+const float Constants::BLOCK_MOVEMENT_SPEED = 8 * 5.f;
 
 

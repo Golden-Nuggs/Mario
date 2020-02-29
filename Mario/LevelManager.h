@@ -15,19 +15,17 @@ class LevelManager
 {
 public:
 	void start(b2World* world);
-	//void BuildLevelFromString();
 	void update(float deltaSeconds);
 	void draw(sf::RenderWindow& window);
 	sf::View& getGameView();
 
 private:
-	Guy guy;
+	Guy* guy;
 
-	sf::Texture level_spriteSheet;
-	std::vector<Tile> levelTiles;
-	std::vector<Collider> colliders_ground;
-	//std::vector<std::unique_ptr<Block>> all_block_ptrs;
-	std::vector<Block*> all_blocks;
+	sf::Texture* level_spriteSheet;
+	std::vector<Tile*> levelTiles;
+	std::vector<Collider*> colliders_ground;
+	std::vector<std::unique_ptr<Block>> all_blocks;
 
 	Camera camera;
 

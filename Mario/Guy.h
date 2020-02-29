@@ -22,8 +22,8 @@ public:
 	const sf::Vector2<float> getPosition();
 
 private:
-	sf::Texture texture;
-	sf::Sprite sprite;	
+	sf::Texture* texture = nullptr;
+	sf::Sprite* sprite = nullptr;	
 	b2World* worldPtr = nullptr;
 	b2BodyDef bodyDef;
 	b2Body* bodyPtr = nullptr;

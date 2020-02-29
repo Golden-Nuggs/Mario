@@ -8,6 +8,10 @@
 
 Guy::Guy()
 {
+	texture = new sf::Texture();
+	texture->loadFromFile("Textures/mario-small.png");
+
+	sprite = new sf::Sprite();
 	powerJumpTimer = 0.f;
 	currentMoveState = MoveState::IDLE;
 	animFrameDelay = Constants::BASE_ANIM_FRAME_DELAY;
@@ -18,12 +22,12 @@ Guy::Guy()
 void Guy::start(b2World* world)
 {
 	worldPtr = world;
-	texture.loadFromFile("Textures/mario-small.png");
-	sprite.setTexture(texture);
-	sprite.setTextureRect(sf::IntRect(Constants::MARIO_SMALL_IDLE_ATLAS_X, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
-	float hx = sprite.getTextureRect().width / 2.f;
-	float hy = sprite.getTextureRect().height / 2.f;
-	sprite.setOrigin(hx, hy);
+
+	sprite->setTexture(*texture);
+	sprite->setTextureRect(sf::IntRect(Constants::MARIO_SMALL_IDLE_ATLAS_X, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
+	float hx = sprite->getTextureRect().width / 2.f;
+	float hy = sprite->getTextureRect().height / 2.f;
+	sprite->setOrigin(hx, hy);
 
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(5 * Constants::PPU, 13.5f * (float)Constants::PPU);
@@ -39,8 +43,7 @@ void Guy::start(b2World* world)
 	mainFixture.userData = fixtureData_main;
 	bodyPtr->CreateFixture(&mainFixture);
 
-
-	topSensorBox.SetAsBox(sprite.getTextureRect().width / 4.f, 10.f, b2Vec2(sprite.getPosition().x, sprite.getPosition().y - hy), 0.f);
+	topSensorBox.SetAsBox(2.f, 2.f, b2Vec2(sprite->getPosition().x, sprite->getPosition().y - hy), 0.f); //TODO Magic number for width and height of sensor
 	topSensor.shape = &topSensorBox;
 	topSensor.isSensor = true;
 	fixtureData_topSensor = new FixtureUserData;
@@ -49,7 +52,6 @@ void Guy::start(b2World* world)
 	bodyPtr->CreateFixture(&topSensor);
 
 	bodyPtr->SetFixedRotation(true);
-	
 }
 
 void Guy::update(float deltaSeconds)
@@ -69,7 +71,7 @@ void Guy::setCorrectAnimFrame(float deltaSeconds)
 	switch (currentMoveState)
 	{
 	case MoveState::IDLE:
-		sprite.setTextureRect(sf::IntRect(Constants::MARIO_SMALL_IDLE_ATLAS_X * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
+		sprite->setTextureRect(sf::IntRect(Constants::MARIO_SMALL_IDLE_ATLAS_X * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
 		break;
 	case MoveState::WALKING:
 		if (animFrameTimer >= animFrameDelay)
@@ -80,7 +82,7 @@ void Guy::setCorrectAnimFrame(float deltaSeconds)
 				frameIndex = 0;
 			}
 		}
-		sprite.setTextureRect(sf::IntRect((Constants::MARIO_SMALL_RUN_ATLAS_X + frameIndex) * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
+		sprite->setTextureRect(sf::IntRect((Constants::MARIO_SMALL_RUN_ATLAS_X + frameIndex) * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
 		break;
 	case MoveState::RUNNING:
 		if (animFrameTimer >= animFrameDelay / 2.f)
@@ -92,13 +94,13 @@ void Guy::setCorrectAnimFrame(float deltaSeconds)
 			}
 
 		}
-		sprite.setTextureRect(sf::IntRect((Constants::MARIO_SMALL_RUN_ATLAS_X + frameIndex) * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
+		sprite->setTextureRect(sf::IntRect((Constants::MARIO_SMALL_RUN_ATLAS_X + frameIndex) * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
 		break;
 	case MoveState::JUMPING_UP:
-		sprite.setTextureRect(sf::IntRect(Constants::MARIO_SMALL_JUMP_ATLAS_X * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
+		sprite->setTextureRect(sf::IntRect(Constants::MARIO_SMALL_JUMP_ATLAS_X * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
 		break;
 	case MoveState::FLAG_POLE:
-		sprite.setTextureRect(sf::IntRect(Constants::MARIO_SMALL_FLAG_POLE_1_ATLAS_X * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
+		sprite->setTextureRect(sf::IntRect(Constants::MARIO_SMALL_FLAG_POLE_1_ATLAS_X * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
 		break;
 	}
 }
@@ -149,27 +151,13 @@ void Guy::moveSideways()
 		vel.x *= 0.999999f;
 	}
 	bodyPtr->SetLinearVelocity(vel);
-
-
-	//// TODO : Remove this debug move code below and turn gravity back on.
-	// DEBUG ONLY MOVEMENT ALLOW ALL DIRECTIONS
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-	//{
-	//	vel.y = b2Max(vel.y - Constants::WALK_FORCE, -currentMaxWalkSpeed);
-	//}
-	//else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-	//{
-	//	vel.y = b2Min(vel.y + Constants::WALK_FORCE, currentMaxWalkSpeed);
-	//}
-	//bodyPtr->SetLinearVelocity(vel); 
-	//// ^^^ REMOVE ^^^
 }
 
 void Guy::jump(float deltaSeconds)
 {
 	RayCastCallback callback_ground;
 	b2Vec2 p1 = bodyPtr->GetPosition();
-	b2Vec2 p2 = bodyPtr->GetPosition() + b2Vec2(0, 0.51f * sprite.getTextureRect().height);
+	b2Vec2 p2 = bodyPtr->GetPosition() + b2Vec2(0, 0.51f * sprite->getTextureRect().height);
 	worldPtr->RayCast(&callback_ground, p1, p2);
 	bool bGrounded = callback_ground.bHit;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
@@ -194,14 +182,14 @@ void Guy::jump(float deltaSeconds)
 
 void Guy::alignSpriteToBody()
 {
-	sprite.setPosition(bodyPtr->GetPosition().x, bodyPtr->GetPosition().y);
+	sprite->setPosition(bodyPtr->GetPosition().x, bodyPtr->GetPosition().y);
 }
 
 
 
 void Guy::draw(sf::RenderWindow& window)
 {
-	window.draw(sprite);
+	window.draw(*sprite);
 }
 
 const sf::Vector2<float> Guy::getPosition()
@@ -215,11 +203,11 @@ void Guy::flipSpriteWhenTurning()
 	b2Vec2 vel = bodyPtr->GetLinearVelocity();
 	if (vel.x < 0)
 	{
-		sprite.setScale(-1.f, 1.f);
+		sprite->setScale(-1.f, 1.f);
 	}
 	if (vel.x > 0)
 	{
-		sprite.setScale(1.f, 1.f);
+		sprite->setScale(1.f, 1.f);
 	}
 }
 

@@ -51,6 +51,9 @@ public:
     static const std::string MARIO_MAIN_FIXTURE_FIXTUREDATA_NAME;
     static const std::string BLOCK_FIXTUREDATA_NAME;
 
+    // Block
+    static const float BLOCK_MOVEMENT_SPEED;
+
 
 };
 
