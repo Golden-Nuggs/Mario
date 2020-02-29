@@ -12,7 +12,8 @@
 void LevelManager::start(b2World* world)
 {
 	guy = new Guy();
-	level_spriteSheet = new sf::Texture();
+	sf::Texture* tex = new sf::Texture();
+	level_spriteSheet = std::make_unique<sf::Texture>(*tex);
 	worldPtr = world;
 
 	tmx::Map map;
@@ -62,7 +63,7 @@ void LevelManager::start(b2World* world)
 					{
 						Collider* collider = new Collider();
 						collider->start(object.getAABB(), worldPtr);
-						colliders_ground.push_back(collider);
+						colliders_ground.push_back(std::make_unique<Collider>(*collider));
 					}
 				}			
 				if (objectLayer.getName() == "blocks_?")
@@ -105,7 +106,7 @@ void LevelManager::start(b2World* world)
 					Tile* tile = new Tile();
 					// NOTE: Here is where i added minus 1, but couldnt quite understand why i needed it (it was from trial and error)
 					tile->start(tile_x, tile_y, tile_width, tile_height, *level_spriteSheet, sourceTiles[tileID - 1].imagePosition.x, sourceTiles[tileID - 1].imagePosition.y);
-					levelTiles.push_back(tile);
+					levelTiles.push_back(std::make_unique<Tile>(*tile));
 				}
 			}
 		}

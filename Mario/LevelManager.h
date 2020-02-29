@@ -22,9 +22,9 @@ public:
 private:
 	Guy* guy;
 
-	sf::Texture* level_spriteSheet;
-	std::vector<Tile*> levelTiles;
-	std::vector<Collider*> colliders_ground;
+	std::unique_ptr<sf::Texture> level_spriteSheet;
+	std::vector<std::unique_ptr<Tile>> levelTiles;
+	std::vector<std::unique_ptr<Collider>> colliders_ground;
 	std::vector<std::unique_ptr<Block>> all_blocks;
 
 	Camera camera;
