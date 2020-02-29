@@ -116,11 +116,6 @@ void LevelManager::start(b2World* world)
 
 	camera.initView(level_width * tile_width, level_height * tile_height);
 	guy.start(worldPtr);
-
-	for (int i = 0; i < all_blocks.size(); i++)
-	{
-		std::cout << "block_ptrs vec " << i << ": " << all_blocks[i]->bodyPtr->GetUserData() << "\n";
-	}
 }
 
 void LevelManager::update(float deltaSeconds)

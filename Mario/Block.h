@@ -11,14 +11,14 @@ public:
 	enum class BlockType { UNINITIALIZED, BRICK, BRICK_UNBREAKABLE, QUESTION_MARK };
 	Block();
 	~Block();
-	Block(Block&&); // 
+	Block(Block&&); // a move constructor
 	void start(BlockType type, unsigned int x, unsigned int y, unsigned int width, unsigned int height, sf::Texture& texture, unsigned int image_x, unsigned int image_y, b2World* world);
 	void update();
 	void draw(sf::RenderWindow& window);
 	void hit();
 
 
-//private:
+private:
 	//sf::Sprite* sprite = nullptr;
 	sf::Sprite sprite;
 	BlockType blockType;
