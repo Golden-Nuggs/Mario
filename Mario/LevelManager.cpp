@@ -69,10 +69,10 @@ void LevelManager::start(b2World* world)
 					for (const auto object : objects)
 					{
 						//std::unique_ptr<Block> block{ new Block() };
-						Block block;
+						Block* block = new Block();
 						tmx::FloatRect aabb = object.getAABB();
-						block.start(Block::BlockType::QUESTION_MARK, aabb.left, aabb.top, tile_width, tile_height, level_spriteSheet, sourceTiles[Constants::BLOCK_Q_ID].imagePosition.x, sourceTiles[Constants::BLOCK_Q_ID].imagePosition.y, worldPtr);
-						all_block_ptrs.push_back(std::make_unique<Block>(block));
+						block->start(Block::BlockType::QUESTION_MARK, aabb.left, aabb.top, tile_width, tile_height, level_spriteSheet, sourceTiles[Constants::BLOCK_Q_ID].imagePosition.x, sourceTiles[Constants::BLOCK_Q_ID].imagePosition.y, worldPtr);
+						all_blocks.push_back(block);
 					}
 				}
 				if (objectLayer.getName() == "blocks_brick")
@@ -80,10 +80,10 @@ void LevelManager::start(b2World* world)
 					const auto& objects = objectLayer.getObjects();
 					for (const auto object : objects)
 					{
-						Block block;
+						Block* block = new Block();
 						tmx::FloatRect aabb = object.getAABB();
-						block.start(Block::BlockType::BRICK, aabb.left, aabb.top, tile_width, tile_height, level_spriteSheet, sourceTiles[Constants::BLOCK_BRICK_ID].imagePosition.x, sourceTiles[Constants::BLOCK_BRICK_ID].imagePosition.y, worldPtr);
-						all_block_ptrs.push_back(std::make_unique<Block>(block));
+						block->start(Block::BlockType::BRICK, aabb.left, aabb.top, tile_width, tile_height, level_spriteSheet, sourceTiles[Constants::BLOCK_BRICK_ID].imagePosition.x, sourceTiles[Constants::BLOCK_BRICK_ID].imagePosition.y, worldPtr);
+						all_blocks.push_back(block);
 					}
 				}
 			}
@@ -117,9 +117,9 @@ void LevelManager::start(b2World* world)
 	camera.initView(level_width * tile_width, level_height * tile_height);
 	guy.start(worldPtr);
 
-	for (int i = 0; i < all_block_ptrs.size(); i++)
+	for (int i = 0; i < all_blocks.size(); i++)
 	{
-		std::cout << "block_ptrs vec " << i << ": " << all_block_ptrs[i]->bodyPtr->GetUserData() << "\n";
+		std::cout << "block_ptrs vec " << i << ": " << all_blocks[i]->bodyPtr->GetUserData() << "\n";
 	}
 }
 
@@ -127,9 +127,9 @@ void LevelManager::update(float deltaSeconds)
 {
 	guy.update(deltaSeconds);
 	camera.followTarget(guy.getPosition());
-	for (int i = 0; i < all_block_ptrs.size(); i++)
+	for (int i = 0; i < all_blocks.size(); i++)
 	{
-		all_block_ptrs[i]->update();
+		all_blocks[i]->update();
 	}
 }
 
@@ -141,10 +141,10 @@ void LevelManager::draw(sf::RenderWindow& window)
 		levelTiles[i].draw(window);
 	}
 
-	for (int i = 0; i < all_block_ptrs.size(); i++)
+	for (int i = 0; i < all_blocks.size(); i++)
 	{
 
-		all_block_ptrs[i]->draw(window);
+		all_blocks[i]->draw(window);
 	}
 	guy.draw(window);
 }

@@ -11,8 +11,7 @@ public:
 	enum class BlockType { UNINITIALIZED, BRICK, BRICK_UNBREAKABLE, QUESTION_MARK };
 	Block();
 	~Block();
-	//Block(const Block&) = delete;
-	//Block& operator= (const Block&) = delete;
+	Block(Block&&); // 
 	void start(BlockType type, unsigned int x, unsigned int y, unsigned int width, unsigned int height, sf::Texture& texture, unsigned int image_x, unsigned int image_y, b2World* world);
 	void update();
 	void draw(sf::RenderWindow& window);
