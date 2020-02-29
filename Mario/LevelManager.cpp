@@ -8,6 +8,7 @@
 #include <tmxlite/ObjectGroup.hpp>
 #include <vector>
 
+
 void LevelManager::start(b2World* world)
 {
 	worldPtr = world;
@@ -67,10 +68,10 @@ void LevelManager::start(b2World* world)
 					const auto& objects = objectLayer.getObjects();
 					for (const auto object : objects)
 					{
-						Block block;
+						std::unique_ptr<Block> block{ new Block() };
 						tmx::FloatRect aabb = object.getAABB();
-						block.start(Block::BlockType::QUESTION_MARK, aabb.left, aabb.top, tile_width, tile_height, level_spriteSheet, sourceTiles[Constants::BLOCK_Q_ID].imagePosition.x, sourceTiles[Constants::BLOCK_Q_ID].imagePosition.y, worldPtr);
-						all_blocks.push_back(block);
+						block->start(Block::BlockType::QUESTION_MARK, aabb.left, aabb.top, tile_width, tile_height, level_spriteSheet, sourceTiles[Constants::BLOCK_Q_ID].imagePosition.x, sourceTiles[Constants::BLOCK_Q_ID].imagePosition.y, worldPtr);
+						all_block_ptrs.push_back(block);
 					}
 				}
 				if (objectLayer.getName() == "blocks_brick")
@@ -78,10 +79,10 @@ void LevelManager::start(b2World* world)
 					const auto& objects = objectLayer.getObjects();
 					for (const auto object : objects)
 					{
-						Block block;
+						std::unique_ptr<Block> block{ new Block() };
 						tmx::FloatRect aabb = object.getAABB();
-						block.start(Block::BlockType::BRICK, aabb.left, aabb.top, tile_width, tile_height, level_spriteSheet, sourceTiles[Constants::BLOCK_BRICK_ID].imagePosition.x, sourceTiles[Constants::BLOCK_BRICK_ID].imagePosition.y, worldPtr);
-						all_blocks.push_back(block);
+						block->start(Block::BlockType::BRICK, aabb.left, aabb.top, tile_width, tile_height, level_spriteSheet, sourceTiles[Constants::BLOCK_BRICK_ID].imagePosition.x, sourceTiles[Constants::BLOCK_BRICK_ID].imagePosition.y, worldPtr);
+						all_block_ptrs.push_back(block);
 					}
 				}
 			}
@@ -122,9 +123,9 @@ void LevelManager::update(float deltaSeconds)
 {
 	guy.update(deltaSeconds);
 	camera.followTarget(guy.getPosition());
-	for (int i = 0; i < all_blocks.size(); i++)
+	for (int i = 0; i < all_block_ptrs.size(); i++)
 	{
-		all_blocks[i].update();
+		all_block_ptrs[i]->update();
 	}
 }
 
@@ -136,10 +137,10 @@ void LevelManager::draw(sf::RenderWindow& window)
 		levelTiles[i].draw(window);
 	}
 
-	for (int i = 0; i < all_blocks.size(); i++)
+	for (int i = 0; i < all_block_ptrs.size(); i++)
 	{
 
-		all_blocks[i].draw(window);
+		all_block_ptrs[i]->draw(window);
 	}
 	guy.draw(window);
 }

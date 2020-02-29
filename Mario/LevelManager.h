@@ -7,8 +7,8 @@
 #include "Camera.h"
 #include "Collider.h"
 #include "Block.h"
-
 #include <box2d/box2d.h>
+#include <memory>
 
 
 class LevelManager
@@ -27,7 +27,8 @@ private:
 	sf::Texture level_spriteSheet;
 	std::vector<Tile> levelTiles;
 	std::vector<Collider> colliders_ground;
-	std::vector<Block> all_blocks;
+	std::vector<std::unique_ptr<Block>> all_block_ptrs;
+	//std::vector<Block*> all_blocks;
 
 	Camera camera;
 
