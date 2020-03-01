@@ -9,7 +9,7 @@
 Guy::Guy()
 {
 	texture = new sf::Texture();
-	texture->loadFromFile("Textures/mario-small.png");
+	texture->loadFromFile(Constants::PLAYER_SPRITE_SHEET_FILEPATH);
 
 	sprite = new sf::Sprite();
 	powerJumpTimer = 0.f;
@@ -24,7 +24,7 @@ void Guy::start(b2World* world)
 	worldPtr = world;
 
 	sprite->setTexture(*texture);
-	sprite->setTextureRect(sf::IntRect(Constants::MARIO_SMALL_IDLE_ATLAS_X, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
+	sprite->setTextureRect(sf::IntRect(Constants::PLAYER_SMALL_IDLE_ATLAS_X, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
 	float hx = sprite->getTextureRect().width / 2.f;
 	float hy = sprite->getTextureRect().height / 2.f;
 	sprite->setOrigin(hx, hy);
@@ -39,7 +39,7 @@ void Guy::start(b2World* world)
 	mainFixture.density = 70.f; // TODO Magic numbers
 	mainFixture.friction = 0.05f;
 	fixtureData_main = new FixtureUserData;
-	fixtureData_main->friendlyName = Constants::MARIO_MAIN_FIXTURE_FIXTUREDATA_NAME;
+	fixtureData_main->friendlyName = Constants::PLAYER_MAIN_FIXTURE_FIXTUREDATA_NAME;
 	mainFixture.userData = fixtureData_main;
 	bodyPtr->CreateFixture(&mainFixture);
 
@@ -47,7 +47,7 @@ void Guy::start(b2World* world)
 	topSensor.shape = &topSensorBox;
 	topSensor.isSensor = true;
 	fixtureData_topSensor = new FixtureUserData;
-	fixtureData_topSensor->friendlyName = Constants::MARIO_TOP_SENSOR_FIXTUREDATA_NAME;
+	fixtureData_topSensor->friendlyName = Constants::PLAYER_TOP_SENSOR_FIXTUREDATA_NAME;
 	topSensor.userData = fixtureData_topSensor;
 	bodyPtr->CreateFixture(&topSensor);
 
@@ -71,36 +71,36 @@ void Guy::setCorrectAnimFrame(float deltaSeconds)
 	switch (currentMoveState)
 	{
 	case MoveState::IDLE:
-		sprite->setTextureRect(sf::IntRect(Constants::MARIO_SMALL_IDLE_ATLAS_X * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
+		sprite->setTextureRect(sf::IntRect(Constants::PLAYER_SMALL_IDLE_ATLAS_X * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
 		break;
 	case MoveState::WALKING:
 		if (animFrameTimer >= animFrameDelay)
 		{
 			animFrameTimer = 0.f;
-			if (++frameIndex >= Constants::MARIO_SMALL_WALK_FRAME_COUNT)
+			if (++frameIndex >= Constants::PLAYER_SMALL_WALK_FRAME_COUNT)
 			{
 				frameIndex = 0;
 			}
 		}
-		sprite->setTextureRect(sf::IntRect((Constants::MARIO_SMALL_RUN_ATLAS_X + frameIndex) * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
+		sprite->setTextureRect(sf::IntRect((Constants::PLAYER_SMALL_RUN_ATLAS_X + frameIndex) * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
 		break;
 	case MoveState::RUNNING:
 		if (animFrameTimer >= animFrameDelay / 2.f)
 		{
 			animFrameTimer = 0.f;
-			if (++frameIndex >= Constants::MARIO_SMALL_WALK_FRAME_COUNT)
+			if (++frameIndex >= Constants::PLAYER_SMALL_WALK_FRAME_COUNT)
 			{
 				frameIndex = 0;
 			}
 
 		}
-		sprite->setTextureRect(sf::IntRect((Constants::MARIO_SMALL_RUN_ATLAS_X + frameIndex) * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
+		sprite->setTextureRect(sf::IntRect((Constants::PLAYER_SMALL_RUN_ATLAS_X + frameIndex) * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
 		break;
 	case MoveState::JUMPING_UP:
-		sprite->setTextureRect(sf::IntRect(Constants::MARIO_SMALL_JUMP_ATLAS_X * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
+		sprite->setTextureRect(sf::IntRect(Constants::PLAYER_SMALL_JUMP_ATLAS_X * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
 		break;
 	case MoveState::FLAG_POLE:
-		sprite->setTextureRect(sf::IntRect(Constants::MARIO_SMALL_FLAG_POLE_1_ATLAS_X * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
+		sprite->setTextureRect(sf::IntRect(Constants::PLAYER_SMALL_FLAG_POLE_1_ATLAS_X * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
 		break;
 	}
 }
@@ -148,7 +148,7 @@ void Guy::moveSideways()
 	}
 	else
 	{
-		vel.x *= 0.999999f;
+		vel.x *= 0.999999f; // todo magic number
 	}
 	bodyPtr->SetLinearVelocity(vel);
 }

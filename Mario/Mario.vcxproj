@@ -149,13 +149,14 @@
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Constants.cpp" />
     <ClCompile Include="ContactListener.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Guy.cpp" />
+    <ClCompile Include="Powerup.cpp" />
     <ClCompile Include="RaycastCallBack.cpp" />
-    <ClCompile Include="SFMLDebugDraw.cpp" />
     <ClCompile Include="ViewTools.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="main.cpp" />
@@ -165,14 +166,15 @@
   <ItemGroup>
     <ClInclude Include="Block.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Coin.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="ContactListener.h" />
     <ClInclude Include="FixtureUserData.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Guy.h" />
+    <ClInclude Include="Powerup.h" />
     <ClInclude Include="RaycastCallBack.h" />
-    <ClInclude Include="SFMLDebugDraw.h" />
     <ClInclude Include="ViewTools.h" />
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="NoobEngine.h" />

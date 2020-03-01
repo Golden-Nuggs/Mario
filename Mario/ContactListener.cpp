@@ -16,11 +16,13 @@ void ContactListener::BeginContact(b2Contact* contact)
 	{
 		std::string a = fdA->friendlyName;
 		std::string b = fdB->friendlyName;
-		if (a == Constants::MARIO_TOP_SENSOR_FIXTUREDATA_NAME && b == Constants::BLOCK_FIXTUREDATA_NAME)
+
+		// check for PLAYER-top - block collision 
+		if (a == Constants::PLAYER_TOP_SENSOR_FIXTUREDATA_NAME && b == Constants::BLOCK_FIXTUREDATA_NAME)
 		{
 			HandleBlockContact((Block*)udB);
 		}
-		else if (a == Constants::BLOCK_FIXTUREDATA_NAME && b == Constants::MARIO_TOP_SENSOR_FIXTUREDATA_NAME)
+		else if (a == Constants::BLOCK_FIXTUREDATA_NAME && b == Constants::PLAYER_TOP_SENSOR_FIXTUREDATA_NAME)
 		{
 			HandleBlockContact((Block*)udA);
 		}

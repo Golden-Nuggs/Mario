@@ -16,6 +16,10 @@ void NoobEngine::start()
         sf::Event event;
         while (window.pollEvent(event))
         {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            {
+                window.close();
+            }
             if (event.type == sf::Event::Closed)
             {
                 window.close();
@@ -34,6 +38,6 @@ void NoobEngine::start()
 
 void NoobEngine::CreateWindow()
 {
-    window.create(sf::VideoMode(Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT), "Mario!", sf::Style::Default); // TODO: Hardcoded screen res. and window name
-    //Window.create(sf::VideoMode(Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT), "Mario!", sf::Style::Fullscreen); 
+    window.create(sf::VideoMode(Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT), "PLAYER!", sf::Style::Default); // TODO: Hardcoded screen res. and window name
+    //Window.create(sf::VideoMode(Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT), "PLAYER!", sf::Style::Fullscreen); 
 }

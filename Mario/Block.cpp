@@ -5,11 +5,14 @@
 Block::Block()
 {
 	blockType = BlockType::UNINITIALIZED;
+	bHit = new bool;
+	*bHit = false;
 }
 
 void Block::start(BlockType type, unsigned int x, unsigned int y, unsigned int width, unsigned int height, sf::Texture& texture, unsigned int image_x, unsigned int image_y, b2World* world)
 {
 	std::ios::sync_with_stdio(false);
+
 	float hx = width / 2.f;
 	float hy = height / 2.f;
 	worldPtr = world;
@@ -20,7 +23,10 @@ void Block::start(BlockType type, unsigned int x, unsigned int y, unsigned int w
 	sprite->setPosition(x, y);
 	startPosition = sprite->getPosition();
 
+	bodyDef.type = b2_kinematicBody;
 	bodyDef.position.Set(x, y);
+
+
 	bodyPtr = worldPtr->CreateBody(&bodyDef);
 	bodyPtr->SetUserData(this); 
 
@@ -33,15 +39,35 @@ void Block::start(BlockType type, unsigned int x, unsigned int y, unsigned int w
 	mainFixture.userData = fixtureData_main;
 	bodyPtr->CreateFixture(&mainFixture);
 
+	startPos = bodyPtr->GetPosition();
+
 }
 
 void Block::update(float deltaSeconds)
 {
-	if (sprite->getPosition().y < bodyPtr->GetPosition().y)
+
+	if (*bHit)
 	{
-		sprite->move(sf::Vector2f(0, Constants::BLOCK_MOVEMENT_SPEED * deltaSeconds));
+		if (bodyPtr->GetPosition().y <= startPos.y - Constants::BLOCK_MOVEMENT_AMOUNT)
+		{
+			bodyPtr->SetLinearVelocity(b2Vec2(0, Constants::BLOCK_MOVEMENT_SPEED));
+			*bHit = false;
+		}
+	}
+	else
+	{
+		if (bodyPtr->GetPosition().y < startPos.y)
+		{
+
+		}
+		else
+		{
+			bodyPtr->SetLinearVelocity(b2Vec2(0, 0));
+		}
 	}
 
+
+	sprite->setPosition(sf::Vector2f(bodyPtr->GetPosition().x, bodyPtr->GetPosition().y));
 }
 
 void Block::draw(sf::RenderWindow& window)
@@ -51,6 +77,6 @@ void Block::draw(sf::RenderWindow& window)
 
 void Block::hit()
 {
-	std::cout << "block hit\n";
-	sprite->move(sf::Vector2f(0, -8)); // TODO Magic number
+	*bHit = true;
+	bodyPtr->SetLinearVelocity(b2Vec2(0, -Constants::BLOCK_MOVEMENT_AMOUNT));
 }

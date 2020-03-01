@@ -26,7 +26,12 @@ private:
 	b2FixtureDef mainFixture;
 	FixtureUserData* fixtureData_main = nullptr;
 
+
 	sf::Vector2f startPosition;
+
+	b2Vec2 startPos;
+	
+	bool* bHit;
 
 
 };

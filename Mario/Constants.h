@@ -21,10 +21,12 @@ public:
     static const float GRAVITY_Y;
 
     // Level
-    static const unsigned int BLOCK_BRICK_ID = 1;
-    static const unsigned int BLOCK_Q_ID = 24;
+    static const unsigned int SOURCETILESINDEX_BLOCK_BRICK = 1;
+    static const unsigned int SOURCETILESINDEX_BLOCK_Q = 24;
+    static const unsigned int SOURCETILESINDEX_COIN = 57;
 
     // Player
+    static const std::string PLAYER_SPRITE_SHEET_FILEPATH;
     static const int STARTING_LIVES = 5;
     static const int MAX_WALK_SPEED = 7;
     static const int MAX_SPRINT_SPEED = 15;
@@ -34,25 +36,29 @@ public:
     static const float JUMP_BOOST_TIMER;
     static const int SPRITE_WIDTH = 16;
     static const int SPRITE_HEIGHT = 16;
-    static const int MARIO_SMALL_IDLE_ATLAS_X = 0;
-    static const int MARIO_SMALL_RUN_ATLAS_X = 1;
-    static const int MARIO_SMALL_SKID_ATLAS_X = 4;
-    static const int MARIO_SMALL_JUMP_ATLAS_X = 5;
-    static const int MARIO_SMALL_FLAG_POLE_1_ATLAS_X = 6;
-    static const int MARIO_SMALL_FLAG_POLE_2_ATLAS_X = 7;
-    static const int MARIO_SMALL_SWIM_ATLAS_X = 8;
-    static const int MARIO_SMALL_DEAD_ATLAS_X = 13;
-    static const int MARIO_SMALL_WALK_FRAME_COUNT = 3;
-    static const int MARIO_SMALL_SWIM_FRAME_COUNT = 5;
+    static const int PLAYER_SMALL_IDLE_ATLAS_X = 0;
+    static const int PLAYER_SMALL_RUN_ATLAS_X = 1;
+    static const int PLAYER_SMALL_SKID_ATLAS_X = 4;
+    static const int PLAYER_SMALL_JUMP_ATLAS_X = 5;
+    static const int PLAYER_SMALL_FLAG_POLE_1_ATLAS_X = 6;
+    static const int PLAYER_SMALL_FLAG_POLE_2_ATLAS_X = 7;
+    static const int PLAYER_SMALL_SWIM_ATLAS_X = 8;
+    static const int PLAYER_SMALL_DEAD_ATLAS_X = 13;
+    static const int PLAYER_SMALL_WALK_FRAME_COUNT = 3;
+    static const int PLAYER_SMALL_SWIM_FRAME_COUNT = 5;
     static const float BASE_ANIM_FRAME_DELAY;
 
     // Fixture Names
-    static const std::string MARIO_TOP_SENSOR_FIXTUREDATA_NAME;
-    static const std::string MARIO_MAIN_FIXTURE_FIXTUREDATA_NAME;
+    static const std::string PLAYER_TOP_SENSOR_FIXTUREDATA_NAME;
+    static const std::string PLAYER_MAIN_FIXTURE_FIXTUREDATA_NAME;
     static const std::string BLOCK_FIXTUREDATA_NAME;
 
     // Block
+    static const float BLOCK_MOVEMENT_AMOUNT;
     static const float BLOCK_MOVEMENT_SPEED;
+
+    // Powerup
+    static const float POWERUP_BASE_MOVE_SPEED;
 
 
 };

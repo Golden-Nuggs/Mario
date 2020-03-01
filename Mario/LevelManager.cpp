@@ -28,10 +28,10 @@ void LevelManager::start(b2World* world)
 		tile_width = map.getTileSize().x;
 		tile_height = map.getTileSize().y;
 		std::vector<tmx::Tileset::Tile> sourceTiles;
-		const auto& tilesets = map.getTilesets(); // only needed when using more than 1 spritesheet (i will...)
+		const auto& tilesets = map.getTilesets(); // only needed when using more than 1 spritesheet (i will!)
 		for (const auto& tileset : tilesets) // as above
 		{
-			//read out tile set properties, load textures etc...
+			//read out tile set properties, load textures etc... 
 
 			// TODO: Will need to use First GID in the formula to work out level width and current tile (if I want to support multiple spritesheets (i do!) see: https://discourse.mapeditor.org/t/how-is-texture-data-represented-in-tmx-file-and-how-to-get-that-data-in-c/4360
 			sourceTiles = tileset.getTiles();
@@ -73,7 +73,18 @@ void LevelManager::start(b2World* world)
 					{
 						Block* block = new Block();
 						tmx::FloatRect aabb = object.getAABB();
-						block->start(Block::BlockType::QUESTION_MARK, aabb.left, aabb.top, tile_width, tile_height, *level_spriteSheet, sourceTiles[Constants::BLOCK_Q_ID].imagePosition.x, sourceTiles[Constants::BLOCK_Q_ID].imagePosition.y, worldPtr);
+						block->start
+						(
+							Block::BlockType::QUESTION_MARK, 
+							aabb.left, 
+							aabb.top, 
+							tile_width, 
+							tile_height, 
+							*level_spriteSheet, 
+							sourceTiles[Constants::SOURCETILESINDEX_BLOCK_Q].imagePosition.x, 
+							sourceTiles[Constants::SOURCETILESINDEX_BLOCK_Q].imagePosition.y, 
+							worldPtr
+						);
 						all_blocks.push_back(std::make_unique<Block>(*block));
 					}
 				}
@@ -84,7 +95,18 @@ void LevelManager::start(b2World* world)
 					{
 						Block* block = new Block();
 						tmx::FloatRect aabb = object.getAABB();
-						block->start(Block::BlockType::BRICK, aabb.left, aabb.top, tile_width, tile_height, *level_spriteSheet, sourceTiles[Constants::BLOCK_BRICK_ID].imagePosition.x, sourceTiles[Constants::BLOCK_BRICK_ID].imagePosition.y, worldPtr);
+						block->start
+						(
+							Block::BlockType::BRICK, 
+							aabb.left, 
+							aabb.top, 
+							tile_width, 
+							tile_height, 
+							*level_spriteSheet, 
+							sourceTiles[Constants::SOURCETILESINDEX_BLOCK_BRICK].imagePosition.x, 
+							sourceTiles[Constants::SOURCETILESINDEX_BLOCK_BRICK].imagePosition.y, 
+							worldPtr
+						);
 						all_blocks.push_back(std::make_unique<Block>(*block));
 					}
 				}
