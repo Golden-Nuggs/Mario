@@ -20,6 +20,7 @@ public:
 	void moveSideways();
 	void draw(sf::RenderWindow& window);
 	const sf::Vector2<float> getPosition();
+	void addCoins(int amount);
 
 private:
 	sf::Texture* texture = nullptr;
@@ -39,5 +40,5 @@ private:
 	unsigned int frameIndex;
 	FixtureUserData* fixtureData_main = nullptr;
 	FixtureUserData* fixtureData_topSensor = nullptr;
-
+	int coins;
 };

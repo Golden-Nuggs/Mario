@@ -17,6 +17,7 @@ Guy::Guy()
 	animFrameDelay = Constants::BASE_ANIM_FRAME_DELAY;
 	animFrameTimer = 0.f;
 	frameIndex = 0;
+	coins = 0;
 }
 
 void Guy::start(b2World* world)
@@ -24,7 +25,7 @@ void Guy::start(b2World* world)
 	worldPtr = world;
 
 	sprite->setTexture(*texture);
-	sprite->setTextureRect(sf::IntRect(Constants::PLAYER_SMALL_IDLE_ATLAS_X, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
+	sprite->setTextureRect(sf::IntRect(Constants::PLAYER_SMALL_IDLE_ATLAS_X, 0, Constants::TEXTURE_WIDTH, Constants::TEXTURE_HEIGHT));
 	float hx = sprite->getTextureRect().width / 2.f;
 	float hy = sprite->getTextureRect().height / 2.f;
 	sprite->setOrigin(hx, hy);
@@ -71,7 +72,7 @@ void Guy::setCorrectAnimFrame(float deltaSeconds)
 	switch (currentMoveState)
 	{
 	case MoveState::IDLE:
-		sprite->setTextureRect(sf::IntRect(Constants::PLAYER_SMALL_IDLE_ATLAS_X * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
+		sprite->setTextureRect(sf::IntRect(Constants::PLAYER_SMALL_IDLE_ATLAS_X * Constants::TEXTURE_WIDTH, 0, Constants::TEXTURE_WIDTH, Constants::TEXTURE_HEIGHT));
 		break;
 	case MoveState::WALKING:
 		if (animFrameTimer >= animFrameDelay)
@@ -82,7 +83,7 @@ void Guy::setCorrectAnimFrame(float deltaSeconds)
 				frameIndex = 0;
 			}
 		}
-		sprite->setTextureRect(sf::IntRect((Constants::PLAYER_SMALL_RUN_ATLAS_X + frameIndex) * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
+		sprite->setTextureRect(sf::IntRect((Constants::PLAYER_SMALL_RUN_ATLAS_X + frameIndex) * Constants::TEXTURE_WIDTH, 0, Constants::TEXTURE_WIDTH, Constants::TEXTURE_HEIGHT));
 		break;
 	case MoveState::RUNNING:
 		if (animFrameTimer >= animFrameDelay / 2.f)
@@ -94,13 +95,13 @@ void Guy::setCorrectAnimFrame(float deltaSeconds)
 			}
 
 		}
-		sprite->setTextureRect(sf::IntRect((Constants::PLAYER_SMALL_RUN_ATLAS_X + frameIndex) * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
+		sprite->setTextureRect(sf::IntRect((Constants::PLAYER_SMALL_RUN_ATLAS_X + frameIndex) * Constants::TEXTURE_WIDTH, 0, Constants::TEXTURE_WIDTH, Constants::TEXTURE_HEIGHT));
 		break;
 	case MoveState::JUMPING_UP:
-		sprite->setTextureRect(sf::IntRect(Constants::PLAYER_SMALL_JUMP_ATLAS_X * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
+		sprite->setTextureRect(sf::IntRect(Constants::PLAYER_SMALL_JUMP_ATLAS_X * Constants::TEXTURE_WIDTH, 0, Constants::TEXTURE_WIDTH, Constants::TEXTURE_HEIGHT));
 		break;
 	case MoveState::FLAG_POLE:
-		sprite->setTextureRect(sf::IntRect(Constants::PLAYER_SMALL_FLAG_POLE_1_ATLAS_X * Constants::SPRITE_WIDTH, 0, Constants::SPRITE_WIDTH, Constants::SPRITE_HEIGHT));
+		sprite->setTextureRect(sf::IntRect(Constants::PLAYER_SMALL_FLAG_POLE_1_ATLAS_X * Constants::TEXTURE_WIDTH, 0, Constants::TEXTURE_WIDTH, Constants::TEXTURE_HEIGHT));
 		break;
 	}
 }
@@ -196,6 +197,11 @@ const sf::Vector2<float> Guy::getPosition()
 {
 	sf::Vector2<float> pos = sf::Vector2<float>(bodyPtr->GetPosition().x, bodyPtr->GetPosition().y);
 	return pos;
+}
+
+void Guy::addCoins(int amount)
+{
+	coins += amount;
 }
 
 void Guy::flipSpriteWhenTurning()

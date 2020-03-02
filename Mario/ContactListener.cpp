@@ -20,20 +20,20 @@ void ContactListener::BeginContact(b2Contact* contact)
 		// check for PLAYER-top - block collision 
 		if (a == Constants::PLAYER_TOP_SENSOR_FIXTUREDATA_NAME && b == Constants::BLOCK_FIXTUREDATA_NAME)
 		{
-			HandleBlockContact((Block*)udB);
+			HandleBlockContact((Block*)udB, (Guy*)udA);
 		}
 		else if (a == Constants::BLOCK_FIXTUREDATA_NAME && b == Constants::PLAYER_TOP_SENSOR_FIXTUREDATA_NAME)
 		{
-			HandleBlockContact((Block*)udA);
+			HandleBlockContact((Block*)udA, (Guy*)udB);
 		}
 	}
 }
 
-void ContactListener::HandleBlockContact(Block* block)
+void ContactListener::HandleBlockContact(Block* block, Guy* guy)
 {
 	if (block != nullptr)
 	{
-		block->hit();
+		block->hit(guy);
 	}
 
 }

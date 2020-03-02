@@ -10,6 +10,7 @@ void NoobEngine::start()
     gravity = b2Vec2(Constants::GRAVITY_X, Constants::GRAVITY_Y); 
     world = new b2World(gravity);
     game.start(world);
+    LevelManager* levelManager = LevelManager::getInstance();
 
     while (window.isOpen())
     {
@@ -26,7 +27,7 @@ void NoobEngine::start()
             }
             if (event.type == sf::Event::Resized)
             {
-                game.getLevelManager().getGameView() = ViewTools::getLetterBoxView(game.getLevelManager().getGameView(), event.size.width, event.size.height);
+                levelManager->getGameView() = ViewTools::getLetterBoxView(levelManager->getGameView(), event.size.width, event.size.height);
             }
         }
 

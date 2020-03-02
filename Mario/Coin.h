@@ -6,9 +6,11 @@ class Coin : public Powerup
 {
 public:
 	Coin();
-	void update(float deltaSeconds) override;
-	void draw(sf::RenderWindow& window) override;
+	virtual void update(float deltaSeconds) override;
+	virtual void draw(sf::RenderWindow& window) override;
 
 protected:
-
+	
+private:
+	float startY;
 };

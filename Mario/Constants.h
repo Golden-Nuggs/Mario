@@ -23,7 +23,11 @@ public:
     // Level
     static const unsigned int SOURCETILESINDEX_BLOCK_BRICK = 1;
     static const unsigned int SOURCETILESINDEX_BLOCK_Q = 24;
+    static const unsigned int SOURCETILESINDEX_BLOCK_USED = 27;
     static const unsigned int SOURCETILESINDEX_COIN = 57;
+    static const std::string TILED_PROPERTIES_BLOCK_NUMCOIN;
+    static const std::string OBJECT_LAYER_NAME_BLOCKS_Q;
+    static const std::string OBJECT_LAYER_NAME_BLOCKS_BRICK;
 
     // Player
     static const std::string PLAYER_SPRITE_SHEET_FILEPATH;
@@ -34,8 +38,8 @@ public:
     static const float JUMP_FORCE;
     static const float JUMP_BOOST_FORCE;
     static const float JUMP_BOOST_TIMER;
-    static const int SPRITE_WIDTH = 16;
-    static const int SPRITE_HEIGHT = 16;
+    static const int TEXTURE_WIDTH = 16;
+    static const int TEXTURE_HEIGHT = 16;
     static const int PLAYER_SMALL_IDLE_ATLAS_X = 0;
     static const int PLAYER_SMALL_RUN_ATLAS_X = 1;
     static const int PLAYER_SMALL_SKID_ATLAS_X = 4;
@@ -59,6 +63,8 @@ public:
 
     // Powerup
     static const float POWERUP_BASE_MOVE_SPEED;
+    static const int COIN_MAX_Y = 3 * PPU;
+    static const int COIN_MOVE_SPEED = 9 * PPU;
 
 
 };

@@ -10,10 +10,9 @@ public:
 	void start(b2World* world);
 	void update();
 	void draw(sf::RenderWindow& window);
-	LevelManager& getLevelManager();
 
 private:
-	LevelManager levelManager;
+	LevelManager* levelManager = nullptr;
 	sf::Clock deltaClock;
 	b2World* worldPtr = nullptr;
 	ContactListener contactListener;
